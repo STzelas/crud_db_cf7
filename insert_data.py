@@ -1,0 +1,50 @@
+import mysql.connector
+from mysql.connector import Error
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+def create_connection(host_name, user_name, user_password, db_name, port):
+  connection = None
+
+  try:
+    connection = mysql.connector.connect(
+      host=host_name,
+      user=user_name,
+      password=user_password,
+      database=db_name,
+      port=port
+    )
+    print("Connection to MYSQL DB established")
+  except Error as e:
+    print(f"Error: {e} occurred")
+  return connection
+
+def insert_teacher(connection, teacher):
+  cursor = connection.cursor()
+
+  try:
+    cursor.execute(
+      "INSERT INTO teachers (id, firstname, lastname, age) VALUES (%s, %s, %s, %s)",
+      teacher
+    )
+    connection.commit()
+    print("Teacher inserted!")
+  except Error as e:
+    print(f"Error: {e} occurred.")
+    connection.rollback()
+  finally:
+    cursor.close()
+
+def main():
+  MYSQL_ROOT_PASSWORD = os.getenv("MYSQL_ROOT_PASSWORD")
+  conn = create_connection('localhost', 'root', MYSQL_ROOT_PASSWORD, 'coding2025',  port=3306)
+
+  if conn:
+    teacher = (1, "Bob", "K.", 35)
+    insert_teacher(connection=conn, teacher=teacher)
+    conn.close()
+    print("MySQL connection is closed.")
+
+if __name__ == "__main__":
+  main()
