@@ -5,6 +5,17 @@ import os
 load_dotenv()
 
 def create_connection(host_name, user_name, user_password):
+  """
+  Create a database connection to a MySQL server.
+  
+  Parameters:
+  host_name (str): The name of the host.
+  user_name (str): The user name used to authenticate.
+  user_password (str): The password used to authenticate.
+
+  Returns:
+  conn: A MySQLConnection object or None if the connection failed.
+  """
   connection = None
 
   try:
@@ -22,6 +33,13 @@ def create_connection(host_name, user_name, user_password):
 
 # Can be done manually, doing for learning purposes
 def create_db(connection, query):
+  """
+  Create a database using the provided connection and query.
+
+  Parameters:
+  connection: A MySQLConnection object.
+  query (str): The SQL query to create a database.
+  """
   cursor = connection.cursor()
 
   try:
@@ -33,7 +51,9 @@ def create_db(connection, query):
     cursor.close()
 
 def main():
-  
+  """
+  Main function to create a database.
+  """
   MYSQL_ROOT_PASSWORD = os.getenv("MYSQL_ROOT_PASSWORD")
   conn = create_connection('localhost', 'root', MYSQL_ROOT_PASSWORD)
 

@@ -5,6 +5,19 @@ import os
 load_dotenv()
 
 def create_connection(host_name, user_name, user_password, db_name, port):
+  """
+  Create a database connection to a MySQL server.
+  
+  Parameters:
+  host_name (str): The name of the host.
+  user_name (str): The user name used to authenticate.
+  user_password (str): The password used to authenticate.
+  db_name (str): The name of the database.
+  port (str): The port number to connect to.
+
+  Returns:
+  conn: A MySQLConnection object or None if the connection failed.
+  """
   connection = None
 
   try:
@@ -21,6 +34,12 @@ def create_connection(host_name, user_name, user_password, db_name, port):
   return connection
 
 def create_table(connection):
+  """
+  Create tables in the provided MySQL database connection.
+
+  Parameters:
+  connection: A MySQLConnection object.
+  """
   create_students_table = """
     CREATE TABLE IF NOT EXISTS students (
         id INTEGER PRIMARY KEY,
